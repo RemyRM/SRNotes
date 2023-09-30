@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using System.Diagnostics;
 using SRNotes.Extensions;
+using System.Linq;
 
 namespace SRNotes.Settings
 {
@@ -13,16 +14,21 @@ namespace SRNotes.Settings
     {
         private readonly string SettingsFilePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Resources\\Settings.ini";
 
+        public static Keys ScrollUpKey;
+        public static Keys ScrollDownKey;
+        public static bool ContinuousScrollingEnabled;
+        public static int ScrollSpeed;
+        public static bool SelectCurrentLine;
+        public static int SelectedLineOffset;
+
         public Color BackgroundColour;
         public Color ForegroundColour;
         public Color MenuStripColour;
 
         public float FontSize;
 
-        public static Keys ScrollUpKey;
-        public static Keys ScrollDownKey;
-
-        public static bool SelectCurrentTextLine;
+        public bool OpenLastFileOnLoad;
+        public string LastLoadedFilePath;
 
 
         public SettingsManager()
@@ -39,15 +45,20 @@ namespace SRNotes.Settings
         {
             BackgroundColour = Color.FromArgb(0x1F, 0x1F, 0x1F);
             ForegroundColour = Color.FromArgb(0xCC, 0xCC, 0xCC);
-            ForegroundColour = Color.FromArgb(0x18, 0x18, 0x18);
+            MenuStripColour = Color.FromArgb(0x18, 0x18, 0x18);
 
             FontSize = 11.0f;
 
             ScrollUpKey = Keys.I;
             ScrollDownKey = Keys.K;
 
+            OpenLastFileOnLoad = false;
+            ContinuousScrollingEnabled = true;
         }
 
+        /// <summary>
+        /// Load all the data in the settings file
+        /// </summary>
         private void LoadSettingsFile()
         {
             string[] settingsData = File.ReadAllLines(SettingsFilePath);
@@ -60,15 +71,15 @@ namespace SRNotes.Settings
 
                 //Application background colour
                 if (setting.Contains("BackgroundColour:"))
-                    SetColorFromHex(ref BackgroundColour, setting.Replace("BackgroundColour:#", ""));
+                    SetColourFromHex(ref BackgroundColour, setting.Replace("BackgroundColour:", ""));
 
                 //Application foreground colour
                 if (setting.Contains("ForegroundColour:"))
-                    SetColorFromHex(ref ForegroundColour, setting.Replace("ForegroundColour:#", ""));
+                    SetColourFromHex(ref ForegroundColour, setting.Replace("ForegroundColour:", ""));
 
                 //MenuStrip background colour
                 if (setting.Contains("MenuStripColour:"))
-                    SetColorFromHex(ref MenuStripColour, setting.Replace("MenuStripColour:#", ""));
+                    SetColourFromHex(ref MenuStripColour, setting.Replace("MenuStripColour:", ""));
 
                 //Text font size
                 if (setting.Contains("FontSize:"))
@@ -80,7 +91,39 @@ namespace SRNotes.Settings
                 //Scroll up key
                 if (setting.Contains("ScrollDownKey:"))
                     SetKeyboardKeyFromSettings(ref ScrollDownKey, setting.Replace("ScrollDownKey:", ""));
+
+                if (setting.Contains("LoadLastFileOnOpen:"))
+                    SetBoolFromSettings(ref OpenLastFileOnLoad, setting.Replace("LoadLastFileOnOpen:", ""));
+
+                if (setting.Contains("LastLoadedFilePath:"))
+                    SetStringFromSettings(ref LastLoadedFilePath, setting.Replace("LastLoadedFilePath:", ""));
+
+                if (setting.Contains("ContinuousScrolling:"))
+                    SetBoolFromSettings(ref ContinuousScrollingEnabled, setting.Replace("ContinuousScrolling:", ""));
+
+                if (setting.Contains("ScrollSpeed:"))
+                    SetIntFromSettings(ref ScrollSpeed, setting.Replace("ScrollSpeed:", ""));
+
+                if (setting.Contains("SelectCurrentLine:"))
+                    SetBoolFromSettings(ref SelectCurrentLine, setting.Replace("SelectCurrentLine:", ""));
+
+                if (setting.Contains("SelectedLineOffset:"))
+                    SetIntFromSettings(ref SelectedLineOffset, setting.Replace("SelectedLineOffset:", ""));
             }
+        }
+
+        /// <summary>
+        /// Save a key's new value to the settings file
+        /// </summary>
+        /// <param name="key">The key to update, including :</param>
+        /// <param name="value">The new value of the key</param>
+        public void SaveToSettingsFile(string key, string value)
+        {
+            string[] settingsData = File.ReadAllLines(SettingsFilePath);
+            string fullKey = settingsData.FirstOrDefault(k => k.StartsWith(key));
+            int keyIndex = settingsData.ToList().IndexOf(fullKey);
+            settingsData[keyIndex] = $"{key}{value}";
+            File.WriteAllLines(SettingsFilePath, settingsData);
         }
 
         private void PrintSettings()
@@ -91,16 +134,28 @@ namespace SRNotes.Settings
                             $"MenuStirpColour: {MenuStripColour.ToHexCode()} " +
                             $"FontSize: {FontSize} " +
                             $"ScrollUpKey: {ScrollUpKey} " +
-                            $"ScrollDownKey: {ScrollDownKey} ");
+                            $"ScrollDownKey: {ScrollDownKey} " +
+                            $"LoadLastFileOnOpen: {OpenLastFileOnLoad} ");
         }
 
-        private void SetColorFromHex(ref Color colorToSet, string hex)
+        private void SetColourFromHex(ref Color colorToSet, string hex)
         {
+            if (hex.StartsWith("#"))
+                hex = hex.Replace("#", "");
+
             int result = Convert.ToInt32(hex, 16);
             byte r = (byte)((result & 0xFF0000) >> 16);
             byte g = (byte)((result & 0xFF00) >> 8);
             byte b = (byte)((result & 0xFF) >> 0);
             colorToSet = Color.FromArgb(r, g, b);
+        }
+
+        private void SetIntFromSettings(ref int valueToSet, string data)
+        {
+            if(int.TryParse(data, out int result))
+                valueToSet = result;
+            else
+                valueToSet = 1;
         }
 
         private void SetFloatFromSettings(ref float floatToSet, string data)
@@ -120,6 +175,11 @@ namespace SRNotes.Settings
         {
             if (int.TryParse(data, out int result))
                 boolToSet = result == 1;
+        }
+
+        private void SetStringFromSettings(ref string stringToSet, string data)
+        {
+            stringToSet = data;
         }
     }
 }

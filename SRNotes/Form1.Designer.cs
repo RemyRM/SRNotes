@@ -32,7 +32,7 @@
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainTextBox = new System.Windows.Forms.TextBox();
+            this.MainTextBox = new System.Windows.Forms.RichTextBox();
             this.MainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +60,7 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenFile_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -73,15 +73,15 @@
             this.MainTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.MainTextBox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.MainTextBox.Location = new System.Drawing.Point(13, 38);
-            this.MainTextBox.Multiline = true;
+            this.MainTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.MainTextBox.HideSelection = false;
+            this.MainTextBox.Location = new System.Drawing.Point(13, 39);
             this.MainTextBox.Name = "MainTextBox";
             this.MainTextBox.ReadOnly = true;
-            this.MainTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.MainTextBox.Size = new System.Drawing.Size(1183, 559);
+            this.MainTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.MainTextBox.Size = new System.Drawing.Size(1185, 560);
             this.MainTextBox.TabIndex = 1;
-            this.MainTextBox.WordWrap = false;
+            this.MainTextBox.Text = "";
             // 
             // MainWindow
             // 
@@ -94,6 +94,7 @@
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.Name = "MainWindow";
             this.Text = "SRNotes";
+            this.Resize += new System.EventHandler(this.MainWindow_Resize);
             this.MainMenuStrip.ResumeLayout(false);
             this.MainMenuStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -107,7 +108,7 @@
         private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.TextBox MainTextBox;
+        private System.Windows.Forms.RichTextBox MainTextBox;
     }
 }
 

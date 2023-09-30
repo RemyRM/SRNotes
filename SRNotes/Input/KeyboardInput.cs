@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+
 using SRNotes.Settings;
+using SRNotes.Util;
 
 namespace SRNotes.Input
 {
     internal class KeyboardInput
     {
-        [DllImport("User32.dll")]
-        private static extern short GetAsyncKeyState(Keys vKey);
+
 
         public static bool RunInputLoop = false;
 
@@ -21,24 +21,42 @@ namespace SRNotes.Input
         {
             while (RunInputLoop)
             {
-                if (GetAsyncKeyState(SettingsManager.ScrollUpKey) < 0)
+                if (User32.GetAsyncKeyState(SettingsManager.ScrollUpKey) < 0)
                 {
                     OnScrollUpKeyPressed.Invoke(null, null);
-                    while (GetAsyncKeyState(SettingsManager.ScrollUpKey) < 0)
+
+                    if (SettingsManager.ContinuousScrollingEnabled)
+                    {
                         await Task.Delay(10);
+                    }
+                    else
+                    {
+                        while (User32.GetAsyncKeyState(SettingsManager.ScrollUpKey) < 0)
+                        {
+                            await Task.Delay(10);
+                        }
+                    }
                 }
 
-                if (GetAsyncKeyState(SettingsManager.ScrollDownKey) < 0)
+                if (User32.GetAsyncKeyState(SettingsManager.ScrollDownKey) < 0)
                 {
                     OnScrollDownKeyPressed.Invoke(null, null);
 
-                    while (GetAsyncKeyState(SettingsManager.ScrollDownKey) < 0)
+                    if (SettingsManager.ContinuousScrollingEnabled)
+                    {
                         await Task.Delay(10);
+                    }
+                    else
+                    {
+                        while (User32.GetAsyncKeyState(SettingsManager.ScrollDownKey) < 0)
+                        {
+                            await Task.Delay(10);
+                        }
+                    }
                 }
 
                 await Task.Delay(10);
             }
         }
-
     }
 }
