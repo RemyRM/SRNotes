@@ -2,13 +2,11 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using SRNotes.Input;
 using SRNotes.Settings;
 using SRNotes.Util;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SRNotes
 {
@@ -29,10 +27,18 @@ namespace SRNotes
 
         public MainWindow()
         {
-            InitializeComponent();
-            Initialize();
-            LoadfileOnLoad();
-            StartInputLoop();
+            try
+            {
+
+                InitializeComponent();
+                Initialize();
+                LoadfileOnLoad();
+                StartInputLoop();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private void Initialize()
@@ -58,7 +64,6 @@ namespace SRNotes
             KeyboardInput.OnScrollUpKeyPressed += OnScrollUp;
 
             VisibleLinesCount = GetVisibleLinesCount();
-
             Debug.WriteLine(VisibleLinesCount);
         }
 
@@ -113,14 +118,12 @@ namespace SRNotes
             if (AllText == null || AllText.Length <= 0 || CaretLinePosition == AllText.Length - 1)
                 return;
 
-            Debug.WriteLine("scrolling down");
-
             ScrollTextbox(MainTextBox.Handle, SettingsManager.ScrollSpeed);
 
             if (SettingsManager.SelectCurrentLine)
             {
                 CaretPosition += AllText[CaretLinePosition - 1].Length + 1;
-                MainTextBox.Select(CaretPosition, AllText[CaretLinePosition - 1].Length);
+                MainTextBox.Select(CaretPosition, AllText[CaretLinePosition].Length);
             }
         }
 
@@ -130,17 +133,15 @@ namespace SRNotes
 
         public void OnScrollUp(object sender, EventArgs e)
         {
-            if (AllText == null || AllText.Length <= 0)
+            if (AllText == null || AllText.Length <= 0 || CaretLinePosition <= 0)
                 return;
-
-            Debug.WriteLine("scrolling up");
 
             ScrollTextbox(MainTextBox.Handle, -SettingsManager.ScrollSpeed);
 
             if (SettingsManager.SelectCurrentLine)
             {
-                CaretPosition -= AllText[CaretLinePosition - 1].Length + 1;
-                MainTextBox.Select(CaretPosition, AllText[CaretLinePosition - 1].Length);
+                CaretPosition -= AllText[CaretLinePosition].Length + 1;
+                MainTextBox.Select(CaretPosition, AllText[CaretLinePosition].Length);
             }
         }
 
@@ -160,6 +161,10 @@ namespace SRNotes
             else
                 CaretLinePosition = Math.Min(CaretLinePosition + scrollAmount, AllText.Length);
 
+            //If we have not yet reached the treshold for the line offset we return to wait with scrolling until the treshold was reached
+            if (CaretLinePosition < SettingsManager.SelectedLineOffset)
+                return;
+
             if (scrollAmount < 0)
             {
                 wParam = (IntPtr)User32.SB_LINEUP;
@@ -168,8 +173,6 @@ namespace SRNotes
 
             for (int i = 0; i < scrollAmount; i++)
                 User32.SendMessage(handle, User32.WM_VSCROLL, wParam, lParam);
-
-            Debug.WriteLine(CaretLinePosition);
         }
 
 
@@ -205,6 +208,26 @@ namespace SRNotes
             VisibleLinesCount = GetVisibleLinesCount();
             Debug.WriteLine(VisibleLinesCount);
         }
+
+        /// <summary>
+        /// Open the settings file for editing
+        /// </summary>
+        private void OpenSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!File.Exists(SettingsManager.SettingsFilePath))
+            {
+                Console.WriteLine($"Error: File {SettingsManager.SettingsFilePath} was not found!");
+                return;
+            }
+
+            using (Process process = new Process())
+            {
+                process.StartInfo.FileName = "explorer";
+                process.StartInfo.Arguments = $"{SettingsManager.SettingsFilePath}";
+                process.Start();
+            }
+        }
         #endregion
+
     }
 }

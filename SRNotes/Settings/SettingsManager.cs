@@ -1,18 +1,18 @@
 ﻿using System.IO;
 using System.Drawing;
-using System.Reflection;
 using System;
 using System.Globalization;
 using System.Windows.Forms;
 using System.Diagnostics;
-using SRNotes.Extensions;
 using System.Linq;
+
+using SRNotes.Extensions;
 
 namespace SRNotes.Settings
 {
     public class SettingsManager
     {
-        private readonly string SettingsFilePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Resources\\Settings.ini";
+        public readonly static string SettingsFilePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\SRNotes\\Settings.ini";
 
         public static Keys ScrollUpKey;
         public static Keys ScrollDownKey;
@@ -61,6 +61,13 @@ namespace SRNotes.Settings
         /// </summary>
         private void LoadSettingsFile()
         {
+            if(!File.Exists(SettingsFilePath))
+            {
+                Console.WriteLine($"Error: File {SettingsFilePath} was not found!");
+                Debug.WriteLine($"Error: File {SettingsFilePath} was not found!");
+                return;
+            }
+
             string[] settingsData = File.ReadAllLines(SettingsFilePath);
 
             foreach (string setting in settingsData)
@@ -88,6 +95,7 @@ namespace SRNotes.Settings
                 //Scroll down key
                 if (setting.Contains("ScrollUpKey:"))
                     SetKeyboardKeyFromSettings(ref ScrollUpKey, setting.Replace("ScrollUpKey:", ""));
+
                 //Scroll up key
                 if (setting.Contains("ScrollDownKey:"))
                     SetKeyboardKeyFromSettings(ref ScrollDownKey, setting.Replace("ScrollDownKey:", ""));
@@ -119,6 +127,9 @@ namespace SRNotes.Settings
         /// <param name="value">The new value of the key</param>
         public void SaveToSettingsFile(string key, string value)
         {
+            if (!File.Exists(SettingsFilePath))
+                return;
+
             string[] settingsData = File.ReadAllLines(SettingsFilePath);
             string fullKey = settingsData.FirstOrDefault(k => k.StartsWith(key));
             int keyIndex = settingsData.ToList().IndexOf(fullKey);
