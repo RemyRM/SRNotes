@@ -14,8 +14,9 @@ The tool can be customised to your needs through the `settings.ini` file to cont
 The tool works by directly calling the `GetAsyncKeyState` function from Winuser.h and manipulating the scrollbar through `SendMessage` in combination with `VM_VSCROLL`
 
 # Building
-If you download the source you can either build the application directly using Visual Studio and run the resulting exe. Or build the `SRNotesSetup` project and run the resulting setup.exe.
-When downloading the prebuild binaries all you have to do is run `setup.exe` which will also download all prerequisites and dependencies (such as .NET Framework 4.8.1)
+Go to the "Releases" tab and download the latest release. This will include `setup.exe` which you can run to install the program. This will also download all prerequisites and dependencies (such as .NET Framework 4.8.1)
+
+If you fork or download the full source you can either build the application directly using Visual Studio and run the resulting exe. Or build the `SRNotesSetup` project and run the resulting setup.exe.
 
 # Issues
 If experience any issues with the tool, or would like to suggest a new feature please create an issue on github, or reach out to me on Discord (RemyM#8070).
