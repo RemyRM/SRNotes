@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using SRNotes.Input;
 using SRNotes.Settings;
 using SRNotes.Util;
+using SRNotes.Commands;
 
 namespace SRNotes
 {
@@ -20,6 +21,7 @@ namespace SRNotes
 
         public SettingsManager Settings { get; private set; }
         private string[] AllText { get; set; }
+        private string CurrentLineText { get; set; }
 
         private int VisibleLinesCount { get; set; }
         private int CaretPosition { get; set; } = 0;
@@ -29,7 +31,6 @@ namespace SRNotes
         {
             try
             {
-
                 InitializeComponent();
                 Initialize();
                 LoadfileOnLoad();
@@ -113,7 +114,7 @@ namespace SRNotes
         /// <summary>
         /// Scroll the textbox down when the user defined ScrollDown key is pressed
         /// </summary>
-        public void OnScrollDown(object sender, EventArgs e)
+        public async void OnScrollDown(object sender, EventArgs e)
         {
             if (AllText == null || AllText.Length <= 0 || CaretLinePosition == AllText.Length - 1)
                 return;
@@ -125,13 +126,17 @@ namespace SRNotes
                 CaretPosition += AllText[CaretLinePosition - 1].Length + 1;
                 MainTextBox.Select(CaretPosition, AllText[CaretLinePosition].Length);
             }
+
+            CurrentLineText = AllText[CaretLinePosition];
+            if (CurrentLineText.StartsWith("["))
+                await CommandHandler.RunCommand(CurrentLineText);
         }
 
         /// <summary>
         /// Scroll the textbox up when the user defined ScrollUp key is pressed
         /// </summary>
 
-        public void OnScrollUp(object sender, EventArgs e)
+        public async void OnScrollUp(object sender, EventArgs e)
         {
             if (AllText == null || AllText.Length <= 0 || CaretLinePosition <= 0)
                 return;
@@ -143,6 +148,10 @@ namespace SRNotes
                 CaretPosition -= AllText[CaretLinePosition].Length + 1;
                 MainTextBox.Select(CaretPosition, AllText[CaretLinePosition].Length);
             }
+
+            CurrentLineText = AllText[CaretLinePosition];
+            if (CurrentLineText.StartsWith("["))
+                await CommandHandler.RunCommand(CurrentLineText);
         }
 
 
