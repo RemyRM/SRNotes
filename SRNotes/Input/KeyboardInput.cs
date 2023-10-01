@@ -9,8 +9,6 @@ namespace SRNotes.Input
 {
     internal class KeyboardInput
     {
-
-
         public static bool RunInputLoop = false;
 
         public static event EventHandler OnScrollDownKeyPressed;
