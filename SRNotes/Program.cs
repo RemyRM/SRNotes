@@ -1,4 +1,5 @@
 ﻿using SRNotes.Input;
+using SRNotes.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace SRNotes
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new MainWindow());
+            new ImageWindow();
+            Application.Run(new MainView());
 
             KeyboardInput.RunInputLoop = false;
         }

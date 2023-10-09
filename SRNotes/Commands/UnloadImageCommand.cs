@@ -1,4 +1,5 @@
 ﻿using SRNotes.Interfaces;
+using SRNotes.Views;
 using System.Threading.Tasks;
 
 namespace SRNotes.Commands
@@ -18,7 +19,7 @@ namespace SRNotes.Commands
 
         public async void Run()
         {
-            throw new System.NotImplementedException();
+            ImageWindow.Instance.Hide();
         }
 
         public override string ToString() => $"Command: {Command}, Args:{string.Join(" ", Args)}";

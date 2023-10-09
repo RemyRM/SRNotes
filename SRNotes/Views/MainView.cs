@@ -11,7 +11,7 @@ using SRNotes.Commands;
 
 namespace SRNotes
 {
-    public partial class MainWindow : Form
+    public partial class MainView : Form
     {
         public enum ScrollDirection
         {
@@ -27,7 +27,7 @@ namespace SRNotes
         private int CaretPosition { get; set; } = 0;
         private int CaretLinePosition { get; set; } = 0;
 
-        public MainWindow()
+        public MainView()
         {
             try
             {

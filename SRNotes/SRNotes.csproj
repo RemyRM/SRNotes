@@ -52,11 +52,17 @@
   <ItemGroup>
     <Compile Include="Commands\UnloadImageCommand.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
-    <Compile Include="Views\Form1.cs">
+    <Compile Include="Views\ImageWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Views\ImageWindow.Designer.cs">
+      <DependentUpon>ImageWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainView.Designer.cs">
+      <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
     <Compile Include="Input\KeyboardInput.cs" />
     <Compile Include="Commands\CommandHandler.cs" />
@@ -67,8 +73,11 @@
     <Compile Include="Util\RECT.cs" />
     <Compile Include="Commands\LoadImageCommand.cs" />
     <Compile Include="Util\User32.cs" />
-    <EmbeddedResource Include="Views\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Views\ImageWindow.resx">
+      <DependentUpon>ImageWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MainView.resx">
+      <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -98,9 +107,13 @@
   <ItemGroup>
     <Content Include="Icon32x32.ico" />
     <Content Include="Resources\Icon32x32.ico" />
+    <Content Include="Resources\ImageNotFound.png" />
+    <Content Include="Resources\ImageNotFound500x500.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetDir)\Resources\Settings.ini" "%25appdata%25\SRNotes\"</PostBuildEvent>
+    <PostBuildEvent>rem xcopy /Y "$(TargetDir)\Resources\Settings.ini" "%25appdata%25\SRNotes\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

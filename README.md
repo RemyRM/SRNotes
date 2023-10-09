@@ -27,6 +27,18 @@ Open the .txt file containing your notes:
 - Click "Open File"
 - Select your TXT file
 
+# Commands
+Commands are "code snippets" encapsulated in [ and ] that tells the application to perform certain actions. Some require, or have optional, parameters that can be passed inbetween ( and ).
+Currently the following commands have been implemented:
+- [LoadImage("<Full image path>")] Loads an image at default Width*Height (supports BMP, GIF, EXIF, JPG, PNG, and TIFF files)
+- [LoadImage("<Full image path>", Width, Height)] Loads an image at supplied Width*Height (supports BMP, GIF, EXIF, JPG, PNG, and TIFF files)
+- [UnloadImage()] Unload the image window, this is not necessary after every image load as a new `LoadImage` will override its previous image
+
+## Command examples
+`[LoadImage("C:\data\Dasher.jpg")]` - Loads the image "Dasher.jpg" from the specified path using the images native width and height.
+`[LoadImage("C:\data\Dasher.png", 500, 500)]` - Load the image "Dasher.png" from the specified path using the supplied width and height.
+
+
 Open your game and press your keybinds to scroll through the text.
 
 **Note:**
