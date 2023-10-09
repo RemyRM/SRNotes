@@ -27,6 +27,13 @@ Open the .txt file containing your notes:
 - Click "Open File"
 - Select your TXT file
 
+Open your game and press your keybinds to scroll through the text.
+
+**Note:**
+- The application ignores the position of the caret set by the user through clicking within the text. This means that if you click on line 50 to place the caret, pressing your scroll down key will jump back to where the caret was after the last scroll action.
+- Having Windows focus on SRNotes may result in weird scrolling operations when using keybinds that are by default used within Windows to scroll textboxes (e.g. arrow down, Page Down etc). If this happens make sure to not have SRNotes as the focused window.
+
+
 # Commands
 Commands are "code snippets" encapsulated in [ and ] that tells the application to perform certain actions. Some require, or have optional, parameters that can be passed inbetween ( and ).
 Currently the following commands have been implemented:
@@ -35,15 +42,9 @@ Currently the following commands have been implemented:
 - [UnloadImage()] Unload the image window, this is not necessary after every image load as a new `LoadImage` will override its previous image
 
 ## Command examples
-`[LoadImage("C:\data\Dasher.jpg")]` - Loads the image "Dasher.jpg" from the specified path using the images native width and height.
-`[LoadImage("C:\data\Dasher.png", 500, 500)]` - Load the image "Dasher.png" from the specified path using the supplied width and height.
+- `[LoadImage("C:\data\Dasher.jpg")]` - Loads the image "Dasher.jpg" from the specified path using the images native width and height.
+- `[LoadImage("C:\data\Dasher.png", 500, 500)]` - Load the image "Dasher.png" from the specified path using the supplied width and height.
 
-
-Open your game and press your keybinds to scroll through the text.
-
-**Note:**
-- The application ignores the position of the caret set by the user through clicking within the text. This means that if you click on line 50 to place the caret, pressing your scroll down key will jump back to where the caret was after the last scroll action.
-- Having Windows focus on SRNotes may result in weird scrolling operations when using keybinds that are by default used within Windows to scroll textboxes (e.g. arrow down, Page Down etc). If this happens make sure to not have SRNotes as the focused window.
 
 # Building
 Go to the "Releases" tab and download the latest release. This will include `setup.exe` which you can run to install the program. This will also download all prerequisites and dependencies (such as .NET Framework 4.8.1)
