@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using SRNotes.Settings;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -23,9 +24,23 @@ namespace SRNotes.Views
             ImageBox.Image = bitmap;
         }
 
+        private void ImageWindow_Activated(object sender, System.EventArgs e)
+        {
+            Location = new Point(SettingsManager.ImageWindowXPos, SettingsManager.ImageWindowYPos);
+        }
+
         private void ImageWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (SettingsManager.OverrideStoredPositionWindow)
+            {
+                SettingsManager.ImageWindowXPos = Location.X;
+                SettingsManager.ImageWindowYPos = Location.Y;
+                SettingsManager.SaveToSettingsFile("ImageWindowXPos:", Location.X.ToString());
+                SettingsManager.SaveToSettingsFile("ImageWindowYPos:", Location.Y.ToString());
+            }
             Instance = null;
         }
+
+
     }
 }

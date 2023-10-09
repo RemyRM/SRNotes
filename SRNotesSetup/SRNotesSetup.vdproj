@@ -27,6 +27,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8CB5A040044A48C8B9C6A76575C886F7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D3E3DE01BE29446A995F5A14748D95BF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -34,12 +40,6 @@
         "Entry"
         {
         "MsmKey" = "8:_F04BB18D57B24670B4BAFCE544DB71A5"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F3FBCACADD6C461E91DA941357643684"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -80,6 +80,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -193,12 +201,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D3E3DE01BE29446A995F5A14748D95BF"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8CB5A040044A48C8B9C6A76575C886F7"
             {
-            "SourcePath" = "8:..\\SRNotes\\Resources\\Settings.ini"
-            "TargetName" = "8:Settings.ini"
+            "SourcePath" = "8:..\\SRNotes\\Resources\\ImageNotFound500x500.png"
+            "TargetName" = "8:ImageNotFound500x500.png"
             "Tag" = "8:"
-            "Folder" = "8:_82035A13DD4C47E98BB001CA97CC0DF7"
+            "Folder" = "8:_A31695100C9C4363BC904C027B498331"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -213,16 +221,16 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F3FBCACADD6C461E91DA941357643684"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D3E3DE01BE29446A995F5A14748D95BF"
             {
-            "SourcePath" = "8:..\\SRNotes\\Resources\\ImageNotFound.png"
-            "TargetName" = "8:ImageNotFound.png"
+            "SourcePath" = "8:..\\SRNotes\\Resources\\Settings.ini"
+            "TargetName" = "8:Settings.ini"
             "Tag" = "8:"
-            "Folder" = "8:_A31695100C9C4363BC904C027B498331"
+            "Folder" = "8:_82035A13DD4C47E98BB001CA97CC0DF7"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
-            "ReadOnly" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
             "Permanent" = "11:FALSE"
@@ -323,7 +331,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SRNotes"
         "ProductCode" = "8:{DFEB7B52-BAF9-4C2F-A210-8EAE7D5ECA98}"
-        "PackageCode" = "8:{C714BFF4-A158-490F-9E10-F5D0C8081071}"
+        "PackageCode" = "8:{AA37CAA4-582B-46FB-83CC-AFE4D5027928}"
         "UpgradeCode" = "8:{00EA08FC-95F2-47B3-B90B-35EA93552661}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

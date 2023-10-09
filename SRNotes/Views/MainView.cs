@@ -205,7 +205,7 @@ namespace SRNotes
                 AllText = File.ReadAllLines(fileDialog.FileName);
                 SetText();
 
-                Settings.SaveToSettingsFile("LastLoadedFilePath:", fileDialog.FileName);
+                SettingsManager.SaveToSettingsFile("LastLoadedFilePath:", fileDialog.FileName);
             }
         }
 

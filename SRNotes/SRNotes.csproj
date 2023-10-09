@@ -107,7 +107,6 @@
   <ItemGroup>
     <Content Include="Icon32x32.ico" />
     <Content Include="Resources\Icon32x32.ico" />
-    <Content Include="Resources\ImageNotFound.png" />
     <Content Include="Resources\ImageNotFound500x500.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

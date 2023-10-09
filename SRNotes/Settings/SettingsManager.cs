@@ -12,7 +12,11 @@ namespace SRNotes.Settings
 {
     public class SettingsManager
     {
+#if DEBUG
+        public readonly static string SettingsFilePath = $"{Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)}\\Resources\\Settings.ini";
+#else
         public readonly static string SettingsFilePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\SRNotes\\Settings.ini";
+#endif
 
         public static Keys ScrollUpKey;
         public static Keys ScrollDownKey;
@@ -20,6 +24,10 @@ namespace SRNotes.Settings
         public static int ScrollSpeed;
         public static bool SelectCurrentLine;
         public static int SelectedLineOffset;
+        public static bool OverrideStoredPositionWindow;
+        public static int ImageWindowXPos;
+        public static int ImageWindowYPos;
+
 
         public Color BackgroundColour;
         public Color ForegroundColour;
@@ -76,56 +84,59 @@ namespace SRNotes.Settings
                 if (setting.StartsWith("#"))
                     continue;
 
-                //Application background colour
                 if (setting.Contains("BackgroundColour:"))
                     SetColourFromHex(ref BackgroundColour, setting.Replace("BackgroundColour:", ""));
 
-                //Application foreground colour
-                if (setting.Contains("ForegroundColour:"))
+                else if (setting.Contains("ForegroundColour:"))
                     SetColourFromHex(ref ForegroundColour, setting.Replace("ForegroundColour:", ""));
 
-                //MenuStrip background colour
-                if (setting.Contains("MenuStripColour:"))
+                else if (setting.Contains("MenuStripColour:"))
                     SetColourFromHex(ref MenuStripColour, setting.Replace("MenuStripColour:", ""));
 
-                //Text font size
-                if (setting.Contains("FontSize:"))
+                else if (setting.Contains("FontSize:"))
                     SetFloatFromSettings(ref FontSize, setting.Replace("FontSize:", ""));
 
-                //Scroll down key
-                if (setting.Contains("ScrollUpKey:"))
+                else if (setting.Contains("ScrollUpKey:"))
                     SetKeyboardKeyFromSettings(ref ScrollUpKey, setting.Replace("ScrollUpKey:", ""));
 
-                //Scroll up key
-                if (setting.Contains("ScrollDownKey:"))
+                else if (setting.Contains("ScrollDownKey:"))
                     SetKeyboardKeyFromSettings(ref ScrollDownKey, setting.Replace("ScrollDownKey:", ""));
 
-                if (setting.Contains("LoadLastFileOnOpen:"))
+                else if (setting.Contains("LoadLastFileOnOpen:"))
                     SetBoolFromSettings(ref OpenLastFileOnLoad, setting.Replace("LoadLastFileOnOpen:", ""));
 
-                if (setting.Contains("LastLoadedFilePath:"))
+                else if (setting.Contains("LastLoadedFilePath:"))
                     SetStringFromSettings(ref LastLoadedFilePath, setting.Replace("LastLoadedFilePath:", ""));
 
-                if (setting.Contains("ContinuousScrolling:"))
+                else if (setting.Contains("ContinuousScrolling:"))
                     SetBoolFromSettings(ref ContinuousScrollingEnabled, setting.Replace("ContinuousScrolling:", ""));
 
-                if (setting.Contains("ScrollSpeed:"))
+                else if (setting.Contains("ScrollSpeed:"))
                     SetIntFromSettings(ref ScrollSpeed, setting.Replace("ScrollSpeed:", ""));
 
-                if (setting.Contains("SelectCurrentLine:"))
+                else if (setting.Contains("SelectCurrentLine:"))
                     SetBoolFromSettings(ref SelectCurrentLine, setting.Replace("SelectCurrentLine:", ""));
 
-                if (setting.Contains("SelectedLineOffset:"))
+                else if (setting.Contains("SelectedLineOffset:"))
                     SetIntFromSettings(ref SelectedLineOffset, setting.Replace("SelectedLineOffset:", ""));
+
+                else if (setting.Contains("OverrideStoredPositionWindow:"))
+                    SetBoolFromSettings(ref OverrideStoredPositionWindow, setting.Replace("OverrideStoredPositionWindow:", ""));
+
+                else if (setting.Contains("ImageWindowXPos:"))
+                    SetIntFromSettings(ref ImageWindowXPos, setting.Replace("ImageWindowXPos:", ""));
+
+                else if (setting.Contains("ImageWindowYPos:"))
+                    SetIntFromSettings(ref ImageWindowYPos, setting.Replace("ImageWindowYPos:", ""));
             }
         }
 
         /// <summary>
         /// Save a key's new value to the settings file
         /// </summary>
-        /// <param name="key">The key to update, including :</param>
+        /// <param name="key">The key to update, including colon ":"</param>
         /// <param name="value">The new value of the key</param>
-        public void SaveToSettingsFile(string key, string value)
+        public static void SaveToSettingsFile(string key, string value)
         {
             if (!File.Exists(SettingsFilePath))
                 return;

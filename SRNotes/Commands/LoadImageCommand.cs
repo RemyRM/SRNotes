@@ -3,8 +3,6 @@ using SRNotes.Views;
 using System.Drawing;
 using System.Reflection;
 using System.IO;
-using System.Diagnostics.Eventing.Reader;
-using System.Runtime.InteropServices;
 
 namespace SRNotes.Commands
 {
@@ -41,7 +39,7 @@ namespace SRNotes.Commands
             }
 
             Bitmap bmp;
-            if (Args.Length == 0 || Args[0] == "" || !File.Exists(Args[0]))
+            if (Args == null || Args.Length == 0 || Args[0] == "" || !File.Exists(Args[0]))
                 bmp = new Bitmap(FileNotFoundImagePath);
             else
                 bmp = new Bitmap(Args[0]);

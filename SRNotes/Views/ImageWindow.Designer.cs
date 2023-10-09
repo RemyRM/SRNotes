@@ -54,6 +54,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "ImageWindow";
+            this.Activated += new System.EventHandler(this.ImageWindow_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ImageWindow_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).EndInit();
             this.ResumeLayout(false);
