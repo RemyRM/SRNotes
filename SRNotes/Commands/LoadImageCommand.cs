@@ -30,13 +30,7 @@ namespace SRNotes.Commands
                 new ImageWindow();
 
             if (Args.Length == 3)
-            {
-                if (int.TryParse(Args[1], out int width))
-                    Width = width;
-
-                if (int.TryParse(Args[2], out int height))
-                    Height = height;
-            }
+                TrySetWidthAndHeightFromArgs();
 
             Bitmap bmp;
             if (Args == null || Args.Length == 0 || Args[0] == "" || !File.Exists(Args[0]))
@@ -46,6 +40,18 @@ namespace SRNotes.Commands
 
             ImageWindow.Instance.SetImage(bmp, Width, Height);
             ImageWindow.Instance.Show();
+        }
+
+        /// <summary>
+        /// Try to parse the second and third argument of the command to integers for the Width and Height of the Bmp
+        /// </summary>
+        private void TrySetWidthAndHeightFromArgs()
+        {
+            if (int.TryParse(Args[1], out int width))
+                Width = width;
+
+            if (int.TryParse(Args[2], out int height))
+                Height = height;
         }
 
         public override string ToString() => $"Command: {Command}, Args:{string.Join(" ", Args)}";

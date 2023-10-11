@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-
-namespace SRNotes.Interfaces
+﻿namespace SRNotes.Interfaces
 {
     public enum CommandType
     {

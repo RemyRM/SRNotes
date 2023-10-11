@@ -20,6 +20,11 @@ namespace SRNotes.Commands
             command.Run();
         }
 
+        /// <summary>
+        /// Parse the command text and extract its type, based on which the command gets constructed.
+        /// </summary>
+        /// <param name="commandText">The text to construe the command from</param>
+        /// <returns>A Command class implementing ICommand</returns>
         public static ICommand ParseCommandText(string commandText)
         {
             int argPos = commandText.IndexOf('(');
@@ -34,7 +39,7 @@ namespace SRNotes.Commands
                 {
                     default:
                     case CommandType.None:
-                        Debug.WriteLine($"Error: Command Type was None for commantText: {commandText}");
+                        Debug.WriteLine($"Error: No command type found for CommandText: {commandText}");
                         return null;
                     case CommandType.LoadImage:
                         return new LoadImageCommand(command, args);

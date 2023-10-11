@@ -1,6 +1,5 @@
 ﻿using SRNotes.Interfaces;
 using SRNotes.Views;
-using System.Threading.Tasks;
 
 namespace SRNotes.Commands
 {
