@@ -32,6 +32,9 @@ namespace SRNotes.Commands
             if (Args.Length == 3)
                 TrySetWidthAndHeightFromArgs();
 
+            if (Args[0].StartsWith("\"") && Args[0].EndsWith("\""))
+                Args[0] = Args[0].Replace("\"", "");
+
             Bitmap bmp;
             if (Args == null || Args.Length == 0 || Args[0] == "" || !File.Exists(Args[0]))
                 bmp = new Bitmap(FileNotFoundImagePath);

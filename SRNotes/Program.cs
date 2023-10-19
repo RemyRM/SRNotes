@@ -20,7 +20,7 @@ namespace SRNotes
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            new ImageWindow();
+            //new ImageWindow();
             Application.Run(new MainView());
 
             KeyboardInput.RunInputLoop = false;

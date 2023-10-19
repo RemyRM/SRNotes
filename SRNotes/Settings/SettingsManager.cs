@@ -25,9 +25,9 @@ namespace SRNotes.Settings
         public static bool SelectCurrentLine;
         public static int SelectedLineOffset;
         public static bool OverrideStoredPositionWindow;
+        public static bool ImageWindowAlwaysOnTop;
         public static int ImageWindowXPos;
         public static int ImageWindowYPos;
-
 
         public Color BackgroundColour;
         public Color ForegroundColour;
@@ -71,7 +71,7 @@ namespace SRNotes.Settings
         {
             if(!File.Exists(SettingsFilePath))
             {
-                Console.WriteLine($"Error: File {SettingsFilePath} was not found!");
+                MessageBox.Show($"Error, no settings file found at {SettingsFilePath}", "Settings not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Debug.WriteLine($"Error: File {SettingsFilePath} was not found!");
                 return;
             }
@@ -128,6 +128,9 @@ namespace SRNotes.Settings
 
                 else if (setting.Contains("ImageWindowYPos:"))
                     SetIntFromSettings(ref ImageWindowYPos, setting.Replace("ImageWindowYPos:", ""));
+
+                else if (setting.Contains("ImageWindowAlwaysOnTop:"))
+                    SetBoolFromSettings(ref ImageWindowAlwaysOnTop, setting.Replace("ImageWindowAlwaysOnTop:", ""));
             }
         }
 

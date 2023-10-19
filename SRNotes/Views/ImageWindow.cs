@@ -13,6 +13,8 @@ namespace SRNotes.Views
         {
             InitializeComponent();
             Instance = this;
+            Location = new Point(SettingsManager.ImageWindowXPos, SettingsManager.ImageWindowYPos);
+            TopMost = SettingsManager.ImageWindowAlwaysOnTop;
         }
 
         public void SetImage(Bitmap bitmap, int width, int height)
@@ -22,11 +24,6 @@ namespace SRNotes.Views
             this.Height = height;
 
             ImageBox.Image = bitmap;
-        }
-
-        private void ImageWindow_Activated(object sender, System.EventArgs e)
-        {
-            Location = new Point(SettingsManager.ImageWindowXPos, SettingsManager.ImageWindowYPos);
         }
 
         private void ImageWindow_FormClosed(object sender, FormClosedEventArgs e)
