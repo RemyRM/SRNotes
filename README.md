@@ -1,6 +1,6 @@
 # SRNotes
-SRNotes is a note *displaying* tool that does not require focus to scroll through them using user-defined shortcuts.
-This comes in handy when you are playing a game that has no (proper) windowed support, or hijacks the mouse so that you can not move it outside of the game borders to scroll through your notes manually forcing the player to set up additional hardware just for note keeping.
+SRNotes is a note *displaying* tool that does not require focus on the application to scroll through the text, using user-defined shortcuts.
+This comes is especially useful while playing games that has no (proper) windowed support, hijacks the mouse, or pauses when focus on the game is lost. Forcing the player to set up additional hardware just for note keeping.
 
 The tool can be customised to your needs through the `settings.ini` file to control:
 - The colours of the application
@@ -30,12 +30,12 @@ Open the .txt file containing your notes:
 Open your game and press your keybinds to scroll through the text.
 
 **Note:**
-- The application ignores the position of the caret set by the user through clicking within the text. This means that if you click on line 50 to place the caret, pressing your scroll down key will jump back to where the caret was after the last scroll action.
+- The application ignores the position of the caret set by the user through clicking within the text. This means that if you click on for example line 50 to place the caret, pressing your scroll down key will jump back to where the caret was after the last scroll action.
 - Having Windows focus on SRNotes may result in weird scrolling operations when using keybinds that are by default used within Windows to scroll textboxes (e.g. arrow down, Page Down etc). If this happens make sure to not have SRNotes as the focused window.
 
 
 # Commands
-Commands are "code snippets" encapsulated in [ and ] that tells the application to perform certain actions. Some require, or have optional, parameters that can be passed inbetween ( and ).
+Commands are "snippets" encapsulated in [ and ] that tells the application to perform certain actions. Some require, or have optional, parameters that can be passed inbetween ( and ).
 Currently the following commands have been implemented:
 - `[LoadImage("<Full image path>")]` Loads an image at default Width*Height (supports BMP, GIF, EXIF, JPG, PNG, and TIFF files)
 - `[LoadImage("<Full image path>", Width, Height)]` Loads an image at supplied Width*Height (supports BMP, GIF, EXIF, JPG, PNG, and TIFF files)
