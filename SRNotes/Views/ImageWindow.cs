@@ -17,6 +17,12 @@ namespace SRNotes.Views
             TopMost = SettingsManager.ImageWindowAlwaysOnTop;
         }
 
+        /// <summary>
+        /// Update the currently shown image in the image window to the provided image
+        /// </summary>
+        /// <param name="bitmap">The new bitmap to display</param>
+        /// <param name="width">The width of the display window</param>
+        /// <param name="height">The height of the display window</param>
         public void SetImage(Bitmap bitmap, int width, int height)
         {
             Debug.WriteLine($"Args Width: {width}, Args Height:{Height}");
@@ -26,6 +32,9 @@ namespace SRNotes.Views
             ImageBox.Image = bitmap;
         }
 
+        /// <summary>
+        /// Event fired when the image window is closed
+        /// </summary>
         private void ImageWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (SettingsManager.OverrideStoredPositionWindow)

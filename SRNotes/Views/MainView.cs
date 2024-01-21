@@ -42,6 +42,11 @@ namespace SRNotes
             }
         }
 
+        /// <summary>
+        /// Initialize and setup the application and load the necessary settings for:
+        /// - GUI
+        /// - Event Handlers
+        /// </summary>
         private void Initialize()
         {
             Settings = new SettingsManager();
@@ -68,6 +73,10 @@ namespace SRNotes
             Debug.WriteLine(VisibleLinesCount);
         }
 
+        /// <summary>
+        /// Get the amount of text lines that are currently visible inside the textbox
+        /// </summary>
+        /// <returns>The amount of visible lines</returns>
         private int GetVisibleLinesCount()
         {
             var rect = new RECT();
@@ -91,10 +100,13 @@ namespace SRNotes
             MainTextBox.Select(0, 0);
         }
 
+        /// <summary>
+        /// Start the input loop for the keyboard listener
+        /// </summary>
         private async void StartInputLoop()
         {
             KeyboardInput.RunInputLoop = true;
-            KeyboardInput.InputLoop();
+            await KeyboardInput.InputLoop();
         }
 
 
@@ -135,7 +147,6 @@ namespace SRNotes
         /// <summary>
         /// Scroll the textbox up when the user defined ScrollUp key is pressed
         /// </summary>
-
         public async void OnScrollUp(object sender, EventArgs e)
         {
             if (AllText == null || AllText.Length <= 0 || CaretLinePosition <= 0)
