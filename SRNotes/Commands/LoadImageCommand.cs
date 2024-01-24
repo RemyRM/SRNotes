@@ -32,6 +32,7 @@ namespace SRNotes.Commands
             if (Args.Length == 3)
                 TrySetWidthAndHeightFromArgs();
 
+            //Remove any leading and trailing quotation marks
             if (Args[0].StartsWith("\"") && Args[0].EndsWith("\""))
                 Args[0] = Args[0].Replace("\"", "");
 

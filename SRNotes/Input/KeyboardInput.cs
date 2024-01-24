@@ -40,11 +40,15 @@ namespace SRNotes.Input
                 onKeyDownEvent.Invoke(null, null);
 
                 if (SettingsManager.ContinuousScrollingEnabled)
+                {
                     await Task.Delay(10);
+                }
                 else
+                {
                     //If continous scrolling is disabled we wait until the key is released before firing the event again
                     while (User32.GetAsyncKeyState(key) < 0)
                         await Task.Yield();
+                }
             }
         }
     }

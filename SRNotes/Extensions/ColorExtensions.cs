@@ -5,7 +5,7 @@ namespace SRNotes.Extensions
     public static class ColorExtensions
     {
         /// <summary>
-        /// Get the Hexcode (include #) from the current Colour Value
+        /// Get the Hexcode (including #) from the current Colour Value
         /// </summary>
         /// <param name="col">The colour to convert</param>
         /// <returns>A # prefixed Colour code</returns>

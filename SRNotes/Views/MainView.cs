@@ -8,17 +8,13 @@ using SRNotes.Input;
 using SRNotes.Settings;
 using SRNotes.Util;
 using SRNotes.Commands;
+using System.Threading.Tasks;
+using SRNotes.Extensions;
 
 namespace SRNotes
 {
     public partial class MainView : Form
     {
-        public enum ScrollDirection
-        {
-            Up = -1,
-            Down = 1,
-        }
-
         public SettingsManager Settings { get; private set; }
         private string[] AllText { get; set; }
         private string CurrentLineText { get; set; }
@@ -64,6 +60,7 @@ namespace SRNotes
 
             // Font
             MainTextBox.Font = new Font("Arial", Settings.FontSize);
+            FontSizeInputtoolStripTextBox.Text = Settings.FontSize.ToString();
 
             // Keyboard events
             KeyboardInput.OnScrollDownKeyPressed += OnScrollDown;
@@ -93,6 +90,9 @@ namespace SRNotes
                 return;
 
             if (Settings.LastLoadedFilePath == null || Settings.LastLoadedFilePath == "")
+                return;
+
+            if (!File.Exists(Settings.LastLoadedFilePath))
                 return;
 
             AllText = File.ReadAllLines(Settings.LastLoadedFilePath);
@@ -126,7 +126,7 @@ namespace SRNotes
         /// <summary>
         /// Scroll the textbox down when the user defined ScrollDown key is pressed
         /// </summary>
-        public async void OnScrollDown(object sender, EventArgs e)
+        public void OnScrollDown(object sender, EventArgs e)
         {
             if (AllText == null || AllText.Length <= 0 || CaretLinePosition == AllText.Length - 1)
                 return;
@@ -139,15 +139,13 @@ namespace SRNotes
                 MainTextBox.Select(CaretPosition, AllText[CaretLinePosition].Length);
             }
 
-            CurrentLineText = AllText[CaretLinePosition];
-            if (CurrentLineText.StartsWith("["))
-                await CommandHandler.RunCommand(CurrentLineText);
+            CheckCurrentLineForCommand();
         }
 
         /// <summary>
         /// Scroll the textbox up when the user defined ScrollUp key is pressed
         /// </summary>
-        public async void OnScrollUp(object sender, EventArgs e)
+        public void OnScrollUp(object sender, EventArgs e)
         {
             if (AllText == null || AllText.Length <= 0 || CaretLinePosition <= 0)
                 return;
@@ -160,14 +158,21 @@ namespace SRNotes
                 MainTextBox.Select(CaretPosition, AllText[CaretLinePosition].Length);
             }
 
+            CheckCurrentLineForCommand();
+        }
+
+        /// <summary>
+        /// Evaluates the current selected line. If it starts with a "[" to indicate it could be a command, run it.
+        /// </summary>
+        private async void CheckCurrentLineForCommand()
+        {
             CurrentLineText = AllText[CaretLinePosition];
             if (CurrentLineText.StartsWith("["))
                 await CommandHandler.RunCommand(CurrentLineText);
         }
 
-
         /// <summary>
-        /// Scrol the scrollbar for the given UI handle using the winuser.h API 
+        /// Scroll the scrollbar for the given UI handle using the winuser.h API 
         /// </summary>
         /// <param name="handle"></param>
         /// <param name="scrollAmount"></param>
@@ -216,7 +221,7 @@ namespace SRNotes
                 AllText = File.ReadAllLines(fileDialog.FileName);
                 SetText();
 
-                SettingsManager.SaveToSettingsFile("LastLoadedFilePath:", fileDialog.FileName);
+                SettingsManager.SaveToSettingsFile("LastLoadedFilePath", fileDialog.FileName);
             }
         }
 
@@ -247,6 +252,44 @@ namespace SRNotes
                 process.Start();
             }
         }
+
+        private void BackgroundToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsManager.SetColourFromColourPicker(ref Settings.BackgroundColour);
+            SettingsManager.SaveToSettingsFile("BackgroundColour", Settings.BackgroundColour.ToHexCode());
+        }
+
+        private void ForegroundToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsManager.SetColourFromColourPicker(ref Settings.ForegroundColour);
+            SettingsManager.SaveToSettingsFile("ForegroundColour", Settings.ForegroundColour.ToHexCode());
+        }
+
+
+        private void MenustripToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsManager.SetColourFromColourPicker(ref Settings.MenuStripColour);
+            SettingsManager.SaveToSettingsFile("MenuStripColour", Settings.ForegroundColour.ToHexCode());
+        }
+
+
+        private void FontSizeInputtoolStripTextBox_TextChanged(object sender, EventArgs e)
+        {
+            ToolStripTextBox fontSizeInput = (ToolStripTextBox)sender;
+
+            if (fontSizeInput.Text == "")
+                return;
+
+            //Remove , and .
+            if (fontSizeInput.Text.Contains(".") || fontSizeInput.Text.Contains(","))
+                FontSizeInputtoolStripTextBox.Text = FontSizeInputtoolStripTextBox.Text.Substring(0, FontSizeInputtoolStripTextBox.Text.Length - 1);
+
+            if (int.TryParse(fontSizeInput.Text, out int value))
+                SettingsManager.SaveToSettingsFile("FontSize", value.ToString());
+            else
+                FontSizeInputtoolStripTextBox.Text = Settings.FontSize.ToString();
+        }
+
         #endregion
 
     }

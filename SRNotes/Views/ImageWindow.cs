@@ -41,12 +41,10 @@ namespace SRNotes.Views
             {
                 SettingsManager.ImageWindowXPos = Location.X;
                 SettingsManager.ImageWindowYPos = Location.Y;
-                SettingsManager.SaveToSettingsFile("ImageWindowXPos:", Location.X.ToString());
-                SettingsManager.SaveToSettingsFile("ImageWindowYPos:", Location.Y.ToString());
+                SettingsManager.SaveToSettingsFile("ImageWindowXPos", Location.X.ToString());
+                SettingsManager.SaveToSettingsFile("ImageWindowYPos", Location.Y.ToString());
             }
             Instance = null;
         }
-
-
     }
 }

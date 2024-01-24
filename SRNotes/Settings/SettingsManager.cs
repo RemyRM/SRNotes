@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Linq;
 
 using SRNotes.Extensions;
-using SRNotes.Util;
 
 namespace SRNotes.Settings
 {
@@ -43,7 +42,7 @@ namespace SRNotes.Settings
         public SettingsManager()
         {
             BaseInitialization();
-            LoadSettingsFile();
+            LoadUserSettingsFile();
             PrintSettings();
         }
 
@@ -58,17 +57,25 @@ namespace SRNotes.Settings
 
             FontSize = 11.0f;
 
-            ScrollUpKey = Keys.I;
-            ScrollDownKey = Keys.K;
+            ScrollUpKey = Keys.PageDown;
+            ScrollDownKey = Keys.PageUp;
 
-            OpenLastFileOnLoad = false;
-            ContinuousScrollingEnabled = true;
+            OpenLastFileOnLoad = true;
+
+            ContinuousScrollingEnabled = false;
+            ScrollSpeed = 1;
+
+            SelectCurrentLine = true;
+            SelectedLineOffset = 10;
+
+            OverrideStoredPositionWindow = true;
+            ImageWindowAlwaysOnTop = true;
         }
 
         /// <summary>
         /// Load all the data in the settings file
         /// </summary>
-        private void LoadSettingsFile()
+        private void LoadUserSettingsFile()
         {
             if (!File.Exists(SettingsFilePath))
             {
@@ -138,17 +145,18 @@ namespace SRNotes.Settings
         /// <summary>
         /// Save a key's new value to the settings file
         /// </summary>
-        /// <param name="key">The key to update, including colon ":"</param>
+        /// <param name="key">The key to update, exluding colon ":"</param>
         /// <param name="value">The new value of the key</param>
         public static void SaveToSettingsFile(string key, string value)
         {
             if (!File.Exists(SettingsFilePath))
                 return;
 
+
             string[] settingsData = File.ReadAllLines(SettingsFilePath);
             string fullKey = settingsData.FirstOrDefault(k => k.StartsWith(key));
             int keyIndex = settingsData.ToList().IndexOf(fullKey);
-            settingsData[keyIndex] = $"{key}{value}";
+            settingsData[keyIndex] = $"{key}:{value}";
             File.WriteAllLines(SettingsFilePath, settingsData);
         }
 
@@ -187,6 +195,14 @@ namespace SRNotes.Settings
                 colorToSet = Color.Red;
 
             }
+        }
+
+        public static void SetColourFromColourPicker(ref Color colorToSet)
+        {
+            ColorDialog colourPicker = new ColorDialog();
+
+            if(colourPicker.ShowDialog() == DialogResult.OK)
+                colorToSet = colourPicker.Color;
         }
 
         /// <summary>

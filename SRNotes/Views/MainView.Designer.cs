@@ -34,6 +34,13 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ColoursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BackgroundColourToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ForegroundColourToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenustripColourToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FontSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FontSizeInputtoolStripTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.MainTextBox = new System.Windows.Forms.RichTextBox();
             this.MainMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -67,17 +74,74 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openSettingsToolStripMenuItem});
+            this.openSettingsToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.ColoursToolStripMenuItem,
+            this.FontSizeToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // openSettingsToolStripMenuItem
             // 
+            this.openSettingsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.openSettingsToolStripMenuItem.Name = "openSettingsToolStripMenuItem";
-            this.openSettingsToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.openSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openSettingsToolStripMenuItem.Text = "Open settings";
             this.openSettingsToolStripMenuItem.Click += new System.EventHandler(this.OpenSettingsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // ColoursToolStripMenuItem
+            // 
+            this.ColoursToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ColoursToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BackgroundColourToolStripMenuItem,
+            this.ForegroundColourToolStripMenuItem,
+            this.MenustripColourToolStripMenuItem});
+            this.ColoursToolStripMenuItem.Name = "ColoursToolStripMenuItem";
+            this.ColoursToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ColoursToolStripMenuItem.Text = "Colours";
+            // 
+            // BackgroundColourToolStripMenuItem
+            // 
+            this.BackgroundColourToolStripMenuItem.Name = "BackgroundColourToolStripMenuItem";
+            this.BackgroundColourToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.BackgroundColourToolStripMenuItem.Text = "Background";
+            this.BackgroundColourToolStripMenuItem.Click += new System.EventHandler(this.BackgroundToolStripMenuItem_Click);
+            // 
+            // ForegroundColourToolStripMenuItem
+            // 
+            this.ForegroundColourToolStripMenuItem.Name = "ForegroundColourToolStripMenuItem";
+            this.ForegroundColourToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.ForegroundColourToolStripMenuItem.Text = "Foreground";
+            this.ForegroundColourToolStripMenuItem.Click += new System.EventHandler(this.ForegroundToolStripMenuItem_Click);
+            // 
+            // MenustripColourToolStripMenuItem
+            // 
+            this.MenustripColourToolStripMenuItem.Name = "MenustripColourToolStripMenuItem";
+            this.MenustripColourToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.MenustripColourToolStripMenuItem.Text = "Menustrip";
+            this.MenustripColourToolStripMenuItem.Click += new System.EventHandler(this.MenustripToolStripMenuItem_Click);
+            // 
+            // FontSizeToolStripMenuItem
+            // 
+            this.FontSizeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FontSizeInputtoolStripTextBox});
+            this.FontSizeToolStripMenuItem.Name = "FontSizeToolStripMenuItem";
+            this.FontSizeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.FontSizeToolStripMenuItem.Text = "Font size";
+            // 
+            // FontSizeInputtoolStripTextBox
+            // 
+            this.FontSizeInputtoolStripTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.FontSizeInputtoolStripTextBox.Name = "FontSizeInputtoolStripTextBox";
+            this.FontSizeInputtoolStripTextBox.Size = new System.Drawing.Size(100, 23);
+            this.FontSizeInputtoolStripTextBox.Text = "11.0";
+            this.FontSizeInputtoolStripTextBox.TextChanged += new System.EventHandler(this.FontSizeInputtoolStripTextBox_TextChanged);
             // 
             // MainTextBox
             // 
@@ -94,7 +158,7 @@
             this.MainTextBox.TabIndex = 1;
             this.MainTextBox.Text = "";
             // 
-            // MainWindow
+            // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -104,7 +168,7 @@
             this.Controls.Add(this.MainMenuStrip);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "MainWindow";
+            this.Name = "MainView";
             this.Text = "SRNotes";
             this.Resize += new System.EventHandler(this.MainWindow_Resize);
             this.MainMenuStrip.ResumeLayout(false);
@@ -122,6 +186,13 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.RichTextBox MainTextBox;
         private System.Windows.Forms.ToolStripMenuItem openSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem ColoursToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem BackgroundColourToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ForegroundColourToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MenustripColourToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FontSizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox FontSizeInputtoolStripTextBox;
     }
 }
 
