@@ -1,5 +1,5 @@
 # SRNotes
-SRNotes is a note *displaying* tool that does not require focus on the application to scroll through the text, using user-defined shortcuts.
+SRNotes is a note *displaying* tool that does not require focus on the application to scroll through the text, through using user-defined shortcuts.
 This comes is especially useful while playing games that has no (proper) windowed support, hijacks the mouse, or pauses when focus on the game is lost. Forcing the player to set up additional hardware just for note keeping.
 
 The tool can be customised to your needs through the `settings.ini` file to control:
@@ -11,17 +11,17 @@ The tool can be customised to your needs through the `settings.ini` file to cont
 - Amount of headlines above the current line
 - Highlighting the current line
 
-The tool works by directly calling the `GetAsyncKeyState` function from Winuser.h and manipulating the scrollbar through `SendMessage` in combination with `VM_VSCROLL`
-
 # Usage
+## Setting up
 On first time use you will likely want to edit some of the settings. To do this:
 - Click "Settings" at the top
 - Click "open settings"
 This will open the Settings.ini file (Located in your appdata/roaming folder) in your default text editor.
-Here you will find all of the above mentioned settings. It is recommended to set a keybind for scrolling that is not used within your game.
+By default the scroll keys are set to PageUp and PageDown. It is recommended to set a keybind for scrolling that is not used within your game.
 
-After editing settings the application needs to be **restarted**
+After editing settings the application needs to be **restarted** manually for the changes to take effect.
 
+## Using the app
 Open the .txt file containing your notes:
 - Click "File" at the top
 - Click "Open File"
