@@ -10,12 +10,12 @@ using SRNotes.Util;
 using SRNotes.Commands;
 using System.Threading.Tasks;
 using SRNotes.Extensions;
+using SRNotes.Views;
 
 namespace SRNotes
 {
     public partial class MainView : Form
     {
-        public SettingsManager Settings { get; private set; }
         private string[] AllText { get; set; }
         private string CurrentLineText { get; set; }
 
@@ -45,22 +45,44 @@ namespace SRNotes
         /// </summary>
         private void Initialize()
         {
-            Settings = new SettingsManager();
+            SettingsManager.InitializeSettingsManager();
 
             // Theme settings
-            this.BackColor = Settings.BackgroundColour;
-            this.ForeColor = Settings.ForegroundColour;
+            this.BackColor = SettingsManager.BackgroundColour;
+            this.ForeColor = SettingsManager.ForegroundColour;
 
-            MainTextBox.BackColor = Settings.BackgroundColour;
-            MainTextBox.ForeColor = Settings.ForegroundColour;
+            MainTextBox.BackColor = SettingsManager.BackgroundColour;
+            MainTextBox.ForeColor = SettingsManager.ForegroundColour;
             MainTextBox.BorderStyle = BorderStyle.None;
 
-            MainMenuStrip.BackColor = Settings.MenuStripColour;
-            MainMenuStrip.ForeColor = Settings.ForegroundColour;
+            //Menu strip
+            MainAppMenuStrip.BackColor = SettingsManager.MenuStripColour;
+            MainAppMenuStrip.ForeColor = SettingsManager.ForegroundColour;
+
+            ((ToolStripMenuItem)ContinuousScrollingToolStripMenuItem.DropDownItems[0]).Checked = !SettingsManager.ContinuousScrollingEnabled;
+            ((ToolStripMenuItem)ContinuousScrollingToolStripMenuItem.DropDownItems[1]).Checked = SettingsManager.ContinuousScrollingEnabled;
+
+            FontSizeInputtoolStripTextBox.Text = SettingsManager.FontSize.ToString();
+
+            ((ToolStripMenuItem)SelectCurrentLineToolStripMenuItem.DropDownItems[0]).Checked = !SettingsManager.SelectCurrentLine;
+            ((ToolStripMenuItem)SelectCurrentLineToolStripMenuItem.DropDownItems[1]).Checked = SettingsManager.SelectCurrentLine;
+
+            ScrollSpeedToolStripTextBox.Text = SettingsManager.ScrollSpeed.ToString();
+            SelectedLineOffsetToolStripTextBox.Text = SettingsManager.SelectedLineOffset.ToString();
+
+            ((ToolStripMenuItem)LoadLastFileOnOpenToolStripMenuItem.DropDownItems[0]).Checked = !SettingsManager.OpenLastFileOnLoad;
+            ((ToolStripMenuItem)LoadLastFileOnOpenToolStripMenuItem.DropDownItems[1]).Checked = SettingsManager.OpenLastFileOnLoad;
+
+            ((ToolStripMenuItem)StoreImageWindowPositionToolStripMenuItem.DropDownItems[0]).Checked = !SettingsManager.OverrideStoredPositionWindow;
+            ((ToolStripMenuItem)StoreImageWindowPositionToolStripMenuItem.DropDownItems[1]).Checked = SettingsManager.OverrideStoredPositionWindow;
+            SettingsManager.SaveToSettingsFile("LoadLastFileOnOpen", "1");
+
+            ((ToolStripMenuItem)ImageWindowAlwaysOnTopToolStripMenuItem.DropDownItems[0]).Checked = !SettingsManager.ImageWindowAlwaysOnTop;
+            ((ToolStripMenuItem)ImageWindowAlwaysOnTopToolStripMenuItem.DropDownItems[1]).Checked = SettingsManager.ImageWindowAlwaysOnTop;
 
             // Font
-            MainTextBox.Font = new Font("Arial", Settings.FontSize);
-            FontSizeInputtoolStripTextBox.Text = Settings.FontSize.ToString();
+            MainTextBox.Font = new Font("Arial", SettingsManager.FontSize);
+            FontSizeInputtoolStripTextBox.Text = SettingsManager.FontSize.ToString();
 
             // Keyboard events
             KeyboardInput.OnScrollDownKeyPressed += OnScrollDown;
@@ -86,16 +108,16 @@ namespace SRNotes
         /// </summary>
         private void LoadfileOnLoad()
         {
-            if (!Settings.OpenLastFileOnLoad)
+            if (!SettingsManager.OpenLastFileOnLoad)
                 return;
 
-            if (Settings.LastLoadedFilePath == null || Settings.LastLoadedFilePath == "")
+            if (SettingsManager.LastLoadedFilePath == null || SettingsManager.LastLoadedFilePath == "")
                 return;
 
-            if (!File.Exists(Settings.LastLoadedFilePath))
+            if (!File.Exists(SettingsManager.LastLoadedFilePath))
                 return;
 
-            AllText = File.ReadAllLines(Settings.LastLoadedFilePath);
+            AllText = File.ReadAllLines(SettingsManager.LastLoadedFilePath);
             SetText();
             MainTextBox.Select(0, 0);
         }
@@ -201,6 +223,27 @@ namespace SRNotes
         }
 
 
+        /// <summary>
+        /// Validate if the input for the given ToolStripTextBox is numerical and not empty
+        /// If it is numerical update the given keyname in the settings file with the new value
+        /// </summary>
+        /// <param name="input">A reference to the <see cref="ToolStripTextBox"/> to update</param>
+        /// <param name="keyNameToUpdate">The name of the key to update in the settings file</param>
+        private void ValidateToolStripTextBoxNumericalInput(ref ToolStripTextBox input, string keyNameToUpdate)
+        {
+            if (input.Text == "")
+                return;
+
+            //Remove , and .
+            if (input.Text.Contains(".") || input.Text.Contains(","))
+                input.Text = input.Text.Substring(0, input.Text.Length - 1);
+
+            if (int.TryParse(input.Text, out int value))
+                SettingsManager.SaveToSettingsFile(keyNameToUpdate, value.ToString());
+            else
+                input.Text = SettingsManager.FontSize.ToString();
+        }
+
         #region UIEvents
         /// <summary>
         /// Open a file dialog when the "Open" menu strip button is clicked and load its contents
@@ -255,42 +298,116 @@ namespace SRNotes
 
         private void BackgroundToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SettingsManager.SetColourFromColourPicker(ref Settings.BackgroundColour);
-            SettingsManager.SaveToSettingsFile("BackgroundColour", Settings.BackgroundColour.ToHexCode());
+            SettingsManager.SetColourFromColourPicker(ref SettingsManager.BackgroundColour);
+            SettingsManager.SaveToSettingsFile("BackgroundColour", SettingsManager.BackgroundColour.ToHexCode());
         }
 
         private void ForegroundToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SettingsManager.SetColourFromColourPicker(ref Settings.ForegroundColour);
-            SettingsManager.SaveToSettingsFile("ForegroundColour", Settings.ForegroundColour.ToHexCode());
+            SettingsManager.SetColourFromColourPicker(ref SettingsManager.ForegroundColour);
+            SettingsManager.SaveToSettingsFile("ForegroundColour", SettingsManager.ForegroundColour.ToHexCode());
         }
 
 
         private void MenustripToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SettingsManager.SetColourFromColourPicker(ref Settings.MenuStripColour);
-            SettingsManager.SaveToSettingsFile("MenuStripColour", Settings.ForegroundColour.ToHexCode());
+            SettingsManager.SetColourFromColourPicker(ref SettingsManager.MenuStripColour);
+            SettingsManager.SaveToSettingsFile("MenuStripColour", SettingsManager.ForegroundColour.ToHexCode());
         }
 
+        private void FontSizeInputtoolStripTextBox_TextChanged(object sender, EventArgs e) =>
+            ValidateToolStripTextBoxNumericalInput(ref FontSizeInputtoolStripTextBox, "FontSize");
 
-        private void FontSizeInputtoolStripTextBox_TextChanged(object sender, EventArgs e)
+        private void ScrollUpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ToolStripTextBox fontSizeInput = (ToolStripTextBox)sender;
-
-            if (fontSizeInput.Text == "")
-                return;
-
-            //Remove , and .
-            if (fontSizeInput.Text.Contains(".") || fontSizeInput.Text.Contains(","))
-                FontSizeInputtoolStripTextBox.Text = FontSizeInputtoolStripTextBox.Text.Substring(0, FontSizeInputtoolStripTextBox.Text.Length - 1);
-
-            if (int.TryParse(fontSizeInput.Text, out int value))
-                SettingsManager.SaveToSettingsFile("FontSize", value.ToString());
-            else
-                FontSizeInputtoolStripTextBox.Text = Settings.FontSize.ToString();
+            SetHotKeyForm setHotKeyForm = new SetHotKeyForm("Scroll Up", SettingsManager.ScrollUpKey.ToString());
+            setHotKeyForm.Show();
         }
 
+        private void ScrollDownToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetHotKeyForm setHotKeyForm = new SetHotKeyForm("Scroll Down", SettingsManager.ScrollDownKey.ToString());
+            setHotKeyForm.Show();
+        }
+
+        private void ContinuousFalseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((ToolStripMenuItem)ContinuousScrollingToolStripMenuItem.DropDownItems[0]).Checked = true;
+            ((ToolStripMenuItem)ContinuousScrollingToolStripMenuItem.DropDownItems[1]).Checked = false;
+            SettingsManager.SaveToSettingsFile("ContinuousScrolling", "0");
+        }
+
+        private void ContinuousTrueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((ToolStripMenuItem)ContinuousScrollingToolStripMenuItem.DropDownItems[0]).Checked = false;
+            ((ToolStripMenuItem)ContinuousScrollingToolStripMenuItem.DropDownItems[1]).Checked = true;
+            SettingsManager.SaveToSettingsFile("ContinuousScrolling", "1");
+        }
+
+        private void ScrollSpeedToolStripTextBox1_TextChanged(object sender, EventArgs e) =>
+            ValidateToolStripTextBoxNumericalInput(ref ScrollSpeedToolStripTextBox, "ScrollSpeed");
+
+        private void SelectLineFalseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((ToolStripMenuItem)SelectCurrentLineToolStripMenuItem.DropDownItems[0]).Checked = true;
+            ((ToolStripMenuItem)SelectCurrentLineToolStripMenuItem.DropDownItems[1]).Checked = false;
+            SettingsManager.SaveToSettingsFile("SelectCurrentLine", "0");
+        }
+
+        private void SelectLineTrueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((ToolStripMenuItem)SelectCurrentLineToolStripMenuItem.DropDownItems[0]).Checked = false;
+            ((ToolStripMenuItem)SelectCurrentLineToolStripMenuItem.DropDownItems[1]).Checked = true;
+            SettingsManager.SaveToSettingsFile("SelectCurrentLine", "1");
+        }
+
+        private void SelectedLineOffsetToolStripTextBox_TextChanged(object sender, EventArgs e) =>
+            ValidateToolStripTextBoxNumericalInput(ref SelectedLineOffsetToolStripTextBox, "SelectedLineOffset");
+
+
+        private void LoadLastFileFalseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((ToolStripMenuItem)LoadLastFileOnOpenToolStripMenuItem.DropDownItems[0]).Checked = true;
+            ((ToolStripMenuItem)LoadLastFileOnOpenToolStripMenuItem.DropDownItems[1]).Checked = false;
+            SettingsManager.SaveToSettingsFile("LoadLastFileOnOpen", "0");
+        }
+
+        private void LoadLastFileTrueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((ToolStripMenuItem)LoadLastFileOnOpenToolStripMenuItem.DropDownItems[0]).Checked = false;
+            ((ToolStripMenuItem)LoadLastFileOnOpenToolStripMenuItem.DropDownItems[1]).Checked = true;
+            SettingsManager.SaveToSettingsFile("LoadLastFileOnOpen", "1");
+        }
+
+        private void StoreImageWinPosFalseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((ToolStripMenuItem)StoreImageWindowPositionToolStripMenuItem.DropDownItems[0]).Checked = true;
+            ((ToolStripMenuItem)StoreImageWindowPositionToolStripMenuItem.DropDownItems[1]).Checked = false;
+            SettingsManager.SaveToSettingsFile("OverrideStoredPositionWindow", "0");
+        }
+
+        private void StoreImageWinPosTrueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((ToolStripMenuItem)StoreImageWindowPositionToolStripMenuItem.DropDownItems[0]).Checked = false;
+            ((ToolStripMenuItem)StoreImageWindowPositionToolStripMenuItem.DropDownItems[1]).Checked = true;
+            SettingsManager.SaveToSettingsFile("OverrideStoredPositionWindow", "1");
+        }
+
+        private void ImageWindowOnTopFalseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((ToolStripMenuItem)ImageWindowAlwaysOnTopToolStripMenuItem.DropDownItems[0]).Checked = true;
+            ((ToolStripMenuItem)ImageWindowAlwaysOnTopToolStripMenuItem.DropDownItems[1]).Checked = false;
+            SettingsManager.SaveToSettingsFile("ImageWindowAlwaysOnTop", "0");
+        }
+
+        private void ImageWindowOnTopTrueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ((ToolStripMenuItem)ImageWindowAlwaysOnTopToolStripMenuItem.DropDownItems[0]).Checked = false;
+            ((ToolStripMenuItem)ImageWindowAlwaysOnTopToolStripMenuItem.DropDownItems[1]).Checked = true;
+            SettingsManager.SaveToSettingsFile("ImageWindowAlwaysOnTop", "1");
+        }
         #endregion
+
 
     }
 }

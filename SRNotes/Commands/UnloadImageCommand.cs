@@ -18,7 +18,8 @@ namespace SRNotes.Commands
 
         public async void Run()
         {
-            ImageWindow.Instance.Close();
+            if (ImageWindow.Instance != null)
+                ImageWindow.Instance.Close();
         }
 
         public override string ToString() => $"Command: {Command}, Args:{string.Join(" ", Args)}";

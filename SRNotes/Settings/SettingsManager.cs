@@ -10,7 +10,7 @@ using SRNotes.Extensions;
 
 namespace SRNotes.Settings
 {
-    public class SettingsManager
+    public static class SettingsManager
     {
 #if DEBUG
         public readonly static string SettingsFilePath = $"{Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)}\\Resources\\Settings.ini";
@@ -29,17 +29,16 @@ namespace SRNotes.Settings
         public static int ImageWindowXPos;
         public static int ImageWindowYPos;
 
-        public Color BackgroundColour;
-        public Color ForegroundColour;
-        public Color MenuStripColour;
+        public static Color BackgroundColour;
+        public static Color ForegroundColour;
+        public static Color MenuStripColour;
 
-        public float FontSize;
+        public static float FontSize;
 
-        public bool OpenLastFileOnLoad;
-        public string LastLoadedFilePath;
+        public static bool OpenLastFileOnLoad;
+        public static string LastLoadedFilePath;
 
-
-        public SettingsManager()
+        public static void InitializeSettingsManager()
         {
             BaseInitialization();
             LoadUserSettingsFile();
@@ -49,7 +48,7 @@ namespace SRNotes.Settings
         /// <summary>
         /// Ensure every setting has a base value in case there is no settings file found
         /// </summary>
-        private void BaseInitialization()
+        private static void BaseInitialization()
         {
             BackgroundColour = Color.FromArgb(0x1F, 0x1F, 0x1F);
             ForegroundColour = Color.FromArgb(0xCC, 0xCC, 0xCC);
@@ -75,7 +74,7 @@ namespace SRNotes.Settings
         /// <summary>
         /// Load all the data in the settings file
         /// </summary>
-        private void LoadUserSettingsFile()
+        private static void LoadUserSettingsFile()
         {
             if (!File.Exists(SettingsFilePath))
             {
@@ -160,7 +159,7 @@ namespace SRNotes.Settings
             File.WriteAllLines(SettingsFilePath, settingsData);
         }
 
-        private void PrintSettings()
+        private static void PrintSettings()
         {
             Debug.WriteLine($"Loaded settings:\n" +
                             $"BackgroundColour: {BackgroundColour.ToHexCode()} " +
@@ -177,7 +176,7 @@ namespace SRNotes.Settings
         /// </summary>
         /// <param name="colorToSet">Reference colour that gets populated with the converted string</param>
         /// <param name="hex">The hex colour string to parse</param>
-        private void SetColourFromHex(ref Color colorToSet, string hex)
+        private static void SetColourFromHex(ref Color colorToSet, string hex)
         {
             if (hex.StartsWith("#"))
                 hex = hex.Replace("#", "");
@@ -210,7 +209,7 @@ namespace SRNotes.Settings
         /// </summary>
         /// <param name="valueToSet">The integer to populate</param>
         /// <param name="data">The data as found in the settings file</param>
-        private void SetIntFromSettings(ref int valueToSet, string data)
+        private static void SetIntFromSettings(ref int valueToSet, string data)
         {
             if (int.TryParse(data, out int result))
                 valueToSet = result;
@@ -226,7 +225,7 @@ namespace SRNotes.Settings
         /// </summary>
         /// <param name="floatToSet">The float to populate</param>
         /// <param name="data">The data as found in the settings file</param>
-        private void SetFloatFromSettings(ref float floatToSet, string data)
+        private static void SetFloatFromSettings(ref float floatToSet, string data)
         {
             if (float.TryParse(data, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out float value))
                 floatToSet = value;
@@ -242,7 +241,7 @@ namespace SRNotes.Settings
         /// </summary>
         /// <param name="keyToSet">The Key value to set</param>
         /// <param name="data">The data as found in the settings file</param>
-        private void SetKeyboardKeyFromSettings(ref Keys keyToSet, string data)
+        private static void SetKeyboardKeyFromSettings(ref Keys keyToSet, string data)
         {
             if (Enum.TryParse(data, out Keys result))
             {
@@ -260,7 +259,7 @@ namespace SRNotes.Settings
         /// </summary>
         /// <param name="boolToSet">The boolean value to set</param>
         /// <param name="data">The data as found in settings file</param>
-        private void SetBoolFromSettings(ref bool boolToSet, string data)
+        private static void SetBoolFromSettings(ref bool boolToSet, string data)
         {
             if (int.TryParse(data, out int result))
                 boolToSet = result == 1;
@@ -276,7 +275,7 @@ namespace SRNotes.Settings
         /// </summary>
         /// <param name="stringToSet">The string value to set</param>
         /// <param name="data">The data as found in the settings file</param>
-        private void SetStringFromSettings(ref string stringToSet, string data)
+        private static void SetStringFromSettings(ref string stringToSet, string data)
         {
             stringToSet = data;
         }
