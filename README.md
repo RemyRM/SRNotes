@@ -13,13 +13,16 @@ The tool can be customised to your needs through the `settings.ini` file to cont
 
 # Usage
 ## Setting up
+Download the installer from the releases tab or clone the respository and build the application yourself.
+
 On first time use you will likely want to edit some of the settings. To do this:
-- Click "Settings" at the top
+- Click "Settings" at the top and use the UI to edit settings
+OR
 - Click "open settings"
 This will open the Settings.ini file (Located in your appdata/roaming folder) in your default text editor.
 By default the scroll keys are set to PageUp and PageDown. It is recommended to set a keybind for scrolling that is not used within your game.
 
-After editing settings the application needs to be **restarted** manually for the changes to take effect.
+**Note:** After editing settings the application needs to be **restarted** manually for the changes to take effect.
 
 ## Using the app
 Open the .txt file containing your notes:
@@ -44,12 +47,6 @@ Currently the following commands have been implemented:
 ## Command examples
 - `[LoadImage("C:\data\Dasher.jpg")]` - Loads the image "Dasher.jpg" from the specified path using the images native width and height.
 - `[LoadImage("C:\data\Dasher.png", 500, 500)]` - Load the image "Dasher.png" from the specified path using the supplied width and height.
-
-
-# Building
-Go to the "Releases" tab and download the latest release. This will include `setup.exe` which you can run to install the program. This will also download all prerequisites and dependencies (such as .NET Framework 4.8.1)
-
-If you fork or download the full source you can either build the application directly using Visual Studio and run the resulting exe. Or build the `SRNotesSetup` project and run the resulting setup.exe.
 
 # Issues
 If experience any issues with the tool, or would like to suggest a new feature please create an issue on github, or reach out to me on Discord (RemyM#8070).
