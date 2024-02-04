@@ -56,6 +56,22 @@ namespace SRNotes
             MainTextBox.BorderStyle = BorderStyle.None;
 
             //Menu strip
+            InitializeSettingsMenuStrip();
+
+            // Font
+            MainTextBox.Font = new Font("Arial", SettingsManager.FontSize);
+            FontSizeInputtoolStripTextBox.Text = SettingsManager.FontSize.ToString();
+
+            // Keyboard events
+            KeyboardInput.OnScrollDownKeyPressed += OnScrollDown;
+            KeyboardInput.OnScrollUpKeyPressed += OnScrollUp;
+
+            VisibleLinesCount = GetVisibleLinesCount();
+            Debug.WriteLine(VisibleLinesCount);
+        }
+
+        private void InitializeSettingsMenuStrip()
+        {
             MainAppMenuStrip.BackColor = SettingsManager.MenuStripColour;
             MainAppMenuStrip.ForeColor = SettingsManager.ForegroundColour;
 
@@ -79,17 +95,6 @@ namespace SRNotes
 
             ((ToolStripMenuItem)ImageWindowAlwaysOnTopToolStripMenuItem.DropDownItems[0]).Checked = !SettingsManager.ImageWindowAlwaysOnTop;
             ((ToolStripMenuItem)ImageWindowAlwaysOnTopToolStripMenuItem.DropDownItems[1]).Checked = SettingsManager.ImageWindowAlwaysOnTop;
-
-            // Font
-            MainTextBox.Font = new Font("Arial", SettingsManager.FontSize);
-            FontSizeInputtoolStripTextBox.Text = SettingsManager.FontSize.ToString();
-
-            // Keyboard events
-            KeyboardInput.OnScrollDownKeyPressed += OnScrollDown;
-            KeyboardInput.OnScrollUpKeyPressed += OnScrollUp;
-
-            VisibleLinesCount = GetVisibleLinesCount();
-            Debug.WriteLine(VisibleLinesCount);
         }
 
         /// <summary>
@@ -407,7 +412,5 @@ namespace SRNotes
             SettingsManager.SaveToSettingsFile("ImageWindowAlwaysOnTop", "1");
         }
         #endregion
-
-
     }
 }

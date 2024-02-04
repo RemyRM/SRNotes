@@ -24,6 +24,7 @@ namespace SRNotes.Settings
         public static int ScrollSpeed;
         public static bool SelectCurrentLine;
         public static int SelectedLineOffset;
+        public static bool DockImageWindow;
         public static bool OverrideStoredPositionWindow;
         public static bool ImageWindowAlwaysOnTop;
         public static int ImageWindowXPos;
@@ -126,6 +127,9 @@ namespace SRNotes.Settings
 
                 else if (setting.Contains("SelectedLineOffset:"))
                     SetIntFromSettings(ref SelectedLineOffset, setting.Replace("SelectedLineOffset:", ""));
+
+                else if (setting.Contains("DockImageWindow:"))
+                    SetBoolFromSettings(ref DockImageWindow, setting.Replace("DockImageWindow:", ""));
 
                 else if (setting.Contains("OverrideStoredPositionWindow:"))
                     SetBoolFromSettings(ref OverrideStoredPositionWindow, setting.Replace("OverrideStoredPositionWindow:", ""));

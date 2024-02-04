@@ -53,7 +53,6 @@
             this.SelectCurrentLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SelectLineFalseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SelectLineTrueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainTextBox = new System.Windows.Forms.RichTextBox();
             this.SelectedLineOffsetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SelectedLineOffsetToolStripTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.LoadLastFileOnOpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +64,7 @@
             this.ImageWindowAlwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ImageWindowOnTopFalseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ImageWindowOnTopTrueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainTextBox = new System.Windows.Forms.RichTextBox();
             this.MainAppMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -137,21 +137,21 @@
             // BackgroundColourToolStripMenuItem
             // 
             this.BackgroundColourToolStripMenuItem.Name = "BackgroundColourToolStripMenuItem";
-            this.BackgroundColourToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.BackgroundColourToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.BackgroundColourToolStripMenuItem.Text = "Background";
             this.BackgroundColourToolStripMenuItem.Click += new System.EventHandler(this.BackgroundToolStripMenuItem_Click);
             // 
             // ForegroundColourToolStripMenuItem
             // 
             this.ForegroundColourToolStripMenuItem.Name = "ForegroundColourToolStripMenuItem";
-            this.ForegroundColourToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.ForegroundColourToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ForegroundColourToolStripMenuItem.Text = "Foreground";
             this.ForegroundColourToolStripMenuItem.Click += new System.EventHandler(this.ForegroundToolStripMenuItem_Click);
             // 
             // MenustripColourToolStripMenuItem
             // 
             this.MenustripColourToolStripMenuItem.Name = "MenustripColourToolStripMenuItem";
-            this.MenustripColourToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.MenustripColourToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.MenustripColourToolStripMenuItem.Text = "Menustrip";
             this.MenustripColourToolStripMenuItem.Click += new System.EventHandler(this.MenustripToolStripMenuItem_Click);
             // 
@@ -269,21 +269,6 @@
             this.SelectLineTrueToolStripMenuItem.Text = "True";
             this.SelectLineTrueToolStripMenuItem.Click += new System.EventHandler(this.SelectLineTrueToolStripMenuItem_Click);
             // 
-            // MainTextBox
-            // 
-            this.MainTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.MainTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.MainTextBox.HideSelection = false;
-            this.MainTextBox.Location = new System.Drawing.Point(13, 39);
-            this.MainTextBox.Name = "MainTextBox";
-            this.MainTextBox.ReadOnly = true;
-            this.MainTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.MainTextBox.Size = new System.Drawing.Size(1185, 560);
-            this.MainTextBox.TabIndex = 1;
-            this.MainTextBox.Text = "";
-            // 
             // SelectedLineOffsetToolStripMenuItem
             // 
             this.SelectedLineOffsetToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -311,14 +296,14 @@
             // LoadLastFileFalseToolStripMenuItem
             // 
             this.LoadLastFileFalseToolStripMenuItem.Name = "LoadLastFileFalseToolStripMenuItem";
-            this.LoadLastFileFalseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LoadLastFileFalseToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.LoadLastFileFalseToolStripMenuItem.Text = "False";
             this.LoadLastFileFalseToolStripMenuItem.Click += new System.EventHandler(this.LoadLastFileFalseToolStripMenuItem_Click);
             // 
             // LoadLastFileTrueToolStripMenuItem
             // 
             this.LoadLastFileTrueToolStripMenuItem.Name = "LoadLastFileTrueToolStripMenuItem";
-            this.LoadLastFileTrueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LoadLastFileTrueToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.LoadLastFileTrueToolStripMenuItem.Text = "True";
             this.LoadLastFileTrueToolStripMenuItem.Click += new System.EventHandler(this.LoadLastFileTrueToolStripMenuItem_Click);
             // 
@@ -334,14 +319,14 @@
             // StoreImageWinPosFalseToolStripMenuItem
             // 
             this.StoreImageWinPosFalseToolStripMenuItem.Name = "StoreImageWinPosFalseToolStripMenuItem";
-            this.StoreImageWinPosFalseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.StoreImageWinPosFalseToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.StoreImageWinPosFalseToolStripMenuItem.Text = "False";
             this.StoreImageWinPosFalseToolStripMenuItem.Click += new System.EventHandler(this.StoreImageWinPosFalseToolStripMenuItem_Click);
             // 
             // StoreImageWinPosTrueToolStripMenuItem
             // 
             this.StoreImageWinPosTrueToolStripMenuItem.Name = "StoreImageWinPosTrueToolStripMenuItem";
-            this.StoreImageWinPosTrueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.StoreImageWinPosTrueToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.StoreImageWinPosTrueToolStripMenuItem.Text = "True";
             this.StoreImageWinPosTrueToolStripMenuItem.Click += new System.EventHandler(this.StoreImageWinPosTrueToolStripMenuItem_Click);
             // 
@@ -357,23 +342,38 @@
             // ImageWindowOnTopFalseToolStripMenuItem
             // 
             this.ImageWindowOnTopFalseToolStripMenuItem.Name = "ImageWindowOnTopFalseToolStripMenuItem";
-            this.ImageWindowOnTopFalseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ImageWindowOnTopFalseToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.ImageWindowOnTopFalseToolStripMenuItem.Text = "False";
             this.ImageWindowOnTopFalseToolStripMenuItem.Click += new System.EventHandler(this.ImageWindowOnTopFalseToolStripMenuItem_Click);
             // 
             // ImageWindowOnTopTrueToolStripMenuItem
             // 
             this.ImageWindowOnTopTrueToolStripMenuItem.Name = "ImageWindowOnTopTrueToolStripMenuItem";
-            this.ImageWindowOnTopTrueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ImageWindowOnTopTrueToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.ImageWindowOnTopTrueToolStripMenuItem.Text = "True";
             this.ImageWindowOnTopTrueToolStripMenuItem.Click += new System.EventHandler(this.ImageWindowOnTopTrueToolStripMenuItem_Click);
+            // 
+            // MainTextBox
+            // 
+            this.MainTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MainTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.MainTextBox.HideSelection = false;
+            this.MainTextBox.Location = new System.Drawing.Point(12, 40);
+            this.MainTextBox.Name = "MainTextBox";
+            this.MainTextBox.ReadOnly = true;
+            this.MainTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.MainTextBox.Size = new System.Drawing.Size(1194, 609);
+            this.MainTextBox.TabIndex = 1;
+            this.MainTextBox.Text = "";
             // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.ClientSize = new System.Drawing.Size(1218, 609);
+            this.ClientSize = new System.Drawing.Size(1218, 661);
             this.Controls.Add(this.MainTextBox);
             this.Controls.Add(this.MainAppMenuStrip);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
