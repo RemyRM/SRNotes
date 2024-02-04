@@ -51,4 +51,4 @@ Currently the following commands have been implemented:
 # Issues
 If experience any issues with the tool, or would like to suggest a new feature please create an issue on github, or reach out to me on Discord (RemyM#8070).
 
-![SRNotes logo](https://github.com/RemyRM/SRNotes/blob/main/SRNotes/Resources/Icon256x256.png)
+![SRNotes logo](https://github.com/RemyRM/SRNotes/blob/main/SRNotes/Resources/SRNotesBanner1280x640.png)
