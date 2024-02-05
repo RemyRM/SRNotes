@@ -1,8 +1,10 @@
-# SRNotes
-SRNotes is a note *displaying* tool that does not require focus on the application to scroll through the text, through using user-defined shortcuts.
-This comes is especially useful while playing games that has no (proper) windowed support, hijacks the mouse, or pauses when focus on the game is lost. Forcing the player to set up additional hardware just for note keeping.
+![SRNotes logo](https://github.com/RemyRM/SRNotes/blob/main/SRNotes/Resources/SRNotesBanner1280x640.png)
 
-The tool can be customised to your needs through the `settings.ini` file to control:
+# SRNotes
+SRNotes is a note-displaying tool that enables users to scroll through text without needing to focus on the application, thanks to user-defined shortcuts. This feature is particularly valuable when playing games that lack proper windowed support, hijack the mouse, or pause when the game loses focus, thus eliminating the need for players to set up additional hardware solely for note-keeping.
+For a quick demo check out [this youtube video](https://www.youtube.com/watch?v=TytWDZS--gE)!
+
+The tool can be customised to your needs through the menu bar or [`settings.ini`](https://github.com/RemyRM/SRNotes/blob/main/SRNotes/Resources/Settings.ini) file directly to control:
 - The colours of the application
 - The font size
 - The keybinds used for scrolling
@@ -13,7 +15,7 @@ The tool can be customised to your needs through the `settings.ini` file to cont
 
 # Usage
 ## Setting up
-Download the installer from the releases tab or clone the respository and build the application yourself.
+Download the installer from the [releases tab](https://github.com/RemyRM/SRNotes/releases) or clone the respository and build the application yourself.
 
 On first time use you will likely want to edit some of the settings. To do this:
 - Click "Settings" at the top and use the UI to edit settings
@@ -49,6 +51,4 @@ Currently the following commands have been implemented:
 - `[LoadImage("C:\data\Dasher.png", 500, 500)]` - Load the image "Dasher.png" from the specified path using the supplied width and height.
 
 # Issues
-If experience any issues with the tool, or would like to suggest a new feature please create an issue on github, or reach out to me on Discord (RemyM#8070).
-
-![SRNotes logo](https://github.com/RemyRM/SRNotes/blob/main/SRNotes/Resources/SRNotesBanner1280x640.png)
+If experience any issues with the tool, or would like to suggest a new feature please create an [issue on github](https://github.com/RemyRM/SRNotes/issues), or reach out to me on Discord (RemyM#8070).
